@@ -1,4 +1,4 @@
 module "vpc" {
-  source = "./vendor/modules/vpc"
-  vpc    = aws_vpc.main.id  # Assuming the module expects a reference to the created VPC
+  source      = "./vendor/modules/vpc"
+  VPC_CIDR    = var.VPC_CIDR  # Assuming the module expects a reference to the created VPC
 }
