@@ -1,8 +1,4 @@
-@Library('roboshop-shared-library@main') _
-env.REPONAME="terraform-vpc"
-terraform()
-
-    pipeline {
+pipeline {
         agent any 
         stages {
             stage('Terraform Init') {
