@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    parameters { choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Chose the environment') }
+    parameters { choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Choose the environment') }
     stages {
         stage('Terraform Init') {
             steps {
