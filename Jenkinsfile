@@ -1,27 +1,33 @@
 pipeline {
-    agent any
+    agent any 
     parameters { 
-        choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Choose the environment')
-        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Choose the environment')
-        }
+        choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Choose the environment') 
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Choose Apply or Destroy') 
+    }
     options {
         ansiColor('xterm')
-    }    
+    }
     stages {
         stage('Terraform Init') {
             steps {
-                sh "terrafile -f env-${ENV}/Terrafile"
-                sh "terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars"
+                script {
+                    sh "terrafile -f env-${params.ENV}/Terrafile"
+                    sh "terraform init -backend-config=env-${params.ENV}/${params.ENV}-backend.tfvars"
+                }
             }
         }
         stage('Terraform Plan') {
             steps {
-                sh "terraform plan -var-file=env-${ENV}/${ENV}.tfvars"
+                script {
+                    sh "terraform plan -var-file=env-${params.ENV}/${params.ENV}.tfvars"
+                }
             }
         }
-        stage('Terraform Apply') {
+        stage('Terraform Apply/Destroy') {
             steps {
-                sh "terraform ${ACTION} -var-file=env-${ENV}/${ENV}.tfvars -auto-approve"
+                script {
+                    sh "terraform ${params.ACTION} -var-file=env-${params.ENV}/${params.ENV}.tfvars -auto-approve"
+                }
             }
         }
     }
