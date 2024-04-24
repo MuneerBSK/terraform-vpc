@@ -4,9 +4,6 @@
             choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Chose the environment') 
             choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Chose Apply or Destroy') 
         }
-        options {
-            ansiColor('xterm')
-        }
         stages {
             stage('Terraform Init') {
                 steps {
